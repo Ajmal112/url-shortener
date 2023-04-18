@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .center-div {
+            width: 1000px;
+            height:1000px;
+        }
+        .div {
+           width: 500px;
+           height: 390px;
+           color: black;
+           margin-left: 500px;
+           position: relative;
+           top:250px;
+           background: rgba(255,255,255,.05);
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  backdrop-filter: blur(20px);
+  border-radius: 8px;
+        }
+        .div:hover {
+            transform: scale(1.04) ;
+        }
+        body {
+            background-image: url("https://img.freepik.com/free-photo/colorful-landscape-with-mountain-background_1340-23725.jpg?size=626&ext=jpg&ga=GA1.1.1388407855.1670229607&semt=sph");
+            overflow: hidden;
+            background-repeat: no-repeat;
+            background-size: 105%;
+        }
+        #fname  {
+            margin-top: 100px;
+            margin-left: 100px;
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid black;
+            -webkit-transition: all 0.30s ease-in-out;
+            outline: none;
+        }
+        #fname:focus , #sname:focus {
+            box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+            border: 1px solid rgba(81, 203, 238, 1);
+        }
+        #sname {
+            margin-top: 40px;
+            margin-left: 70px;
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid black;
+            -webkit-transition: all 0.30s ease-in-out;
+            outline: none;
+            background-color: white;
+            color: black;
+        }
+        
+        #submit {
+            margin-top: 40px;
+            margin-left: 200px;
+            padding: 10px;
+            width: 100px;
+            border-radius: 5px;
+            border: none;
+            background-color: dodgerblue;
+            color: white;
+        }
+        #copyBtn {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: dodgerblue;
+            color: white;
+        }
+        #submit:hover {
+            transform: scale(1.02);
+        }
+        #percentage {
+            margin-top: 60px;
+            position: relative;
+            top:30px;
+            color:white;
+            margin-left: 180px;
+            font-family: sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .start-h1 {
+            text-align: center;
+            position: relative;
+            top:80px;
+            color: white;
+            font-family: sans-serif;
+            font-size: 20px;
+        }
+    </style>
+    
+
+    <div class="center-div">
+
+ 
+        
+    </div>
+
+
+    <script>
+
+
+
+let div;
+
+div = document.createElement("div");
+div.setAttribute("class","div");
+div.innerHTML = ` 
+<h1 class="start-h1">URL Shortener</h1>
+<textarea type="text" id="fname" placeholder="Enter the Long URL to convert"></textarea>
+        <button id="submit">Submit</button>
+        <input id="sname" value="" disabled placeholder="Copy Your Shortened Link here"/>
+        <button id="copyBtn">Copy</button>
+        `;
+
+
+        document.querySelector(".center-div").append(div);
+
+
+let button = document.getElementById("submit");
+button.addEventListener("click",(event) => {
+event.preventDefault();
+
+
+let fname = document.getElementById("fname").value;
+console.log(fname);
+
+
+
+
+
+
+const options = {
+	method: 'POST',
+	headers: {
+		'content-type': 'application/json',
+		'X-RapidAPI-Key': '0dbd38fc8dmsh7004146a64a1761p17226ejsnceab381ff0ef',
+		'X-RapidAPI-Host': 'url-shortener-we-store-your-links-forever.p.rapidapi.com'
+	},
+	body: '{}'
+};
+
+
+
+let url = `https://url-shortener-we-store-your-links-forever.p.rapidapi.com/?url=${fname}`;
+let x;
+fetch(url, options)
+	.then(response => response.json())
+	.then(response => {
+        
+        
+        console.log(response)
+
+        x = response.ShortURL;
+        console.log(x);
+
+
+        document.getElementById("sname").value = x;
+
+    
+    
+    
+    })
+	.catch(err => console.error(err));
+
+
+});
+
+
+
+        // Get the input element and copy button
+        let input = document.getElementById("sname");
+let copyBtn = document.getElementById("copyBtn");
+
+// Add click event listener to the copy button
+copyBtn.addEventListener("click", function() {
+  // Select the text inside the input element
+  input.select();
+  input.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the selected text to clipboard
+  document.execCommand("copy");
+
+  // Copy the selected text to clipboard
+  navigator.clipboard.writeText(input.value);
+
+  // Deselect the input element
+  input.blur();
+  input.style.backgroundColor = "grey";
+
+  // Update the copy button text
+  copyBtn.innerHTML = "Copied!";
+});
+
+
+	
+
+
+    // const option = {
+    //     method : 'GET',
+    //     let arr : PluginArray();
+    // };
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
